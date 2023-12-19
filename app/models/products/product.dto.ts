@@ -1,6 +1,8 @@
-export class Product {
-    id: number | undefined;
-    name: string | undefined;
-    price: string | undefined;
-    quantity: string | undefined;
+export interface Product {
+    id: number;
+    image: string;
+    name: string;
+    price: string;
+    quantity: number;
+    baseQuantity: number;
 }

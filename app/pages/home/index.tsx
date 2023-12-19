@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, FlatList, Image, ListRenderItem, ListRenderItemInfo, StyleSheet, Text, View } from "react-native"
+import { Button, FlatList, Image, ListRenderItem, ListRenderItemInfo, RefreshControl, StyleSheet, Text, View } from "react-native"
 import { HomeService } from "./service/homeService";
 import { Product } from "../../models/products/product.dto";
 import * as ConS from '../../components/Container/style';
@@ -13,6 +13,8 @@ type HomeProps = {
 }
 
 const Home = ({navigation}: HomeProps) => {
+    const [refresh, setOnRefresh] = useState<boolean>(false);
+
     const homeService = new HomeService();
     const [products, setProducts] = useState<Product[]>([]);
     const useCartContext = useAppCartContext();
@@ -26,7 +28,7 @@ const Home = ({navigation}: HomeProps) => {
             .catch((err: any) => {
                 console.log(err);
             })
-    }, []);
+    }, [refresh]);
 
     const onViewCart = (item: Product) => {
         navigation.navigate('ViewCartItem', {
@@ -38,7 +40,8 @@ const Home = ({navigation}: HomeProps) => {
         const itemAlreadyExist = useCartContext.cartItem.filter((cart: Product) => cart.id === item.id);
         if (itemAlreadyExist.length === 0) {
             const prevItem = useCartContext.cartItemCount + 1;
-
+            item.baseQuantity = 1;
+            
             useCartContext.setCartItemCount(prevItem);
             useCartContext.setCartItem((prev: Product) => [...prev, item]);
         }
@@ -60,12 +63,20 @@ const Home = ({navigation}: HomeProps) => {
             </CardProductComponent>
     }
 
+    const onToggleRefresh = () => {
+        setOnRefresh(true);
+        setTimeout(() => {
+            setOnRefresh(false);
+        }, 1000);
+    }
     return <View>
         <ConS.ContainerStyle>
-            <FlatList
-                data={products}
-                renderItem={renderProductCard}
-            />
+            <RefreshControl refreshing={refresh} onRefresh={onToggleRefresh}>
+                <FlatList
+                    data={products}
+                    renderItem={renderProductCard}
+                />
+            </RefreshControl>
         </ConS.ContainerStyle>
     </View>
 }
