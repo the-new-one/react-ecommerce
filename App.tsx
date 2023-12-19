@@ -19,6 +19,7 @@ import Home from './app/pages/home';
 import { ProductHeader } from './app/pages/home/header';
 import {AppCartProvider} from './app/providers/AppProvider/AppProvider';
 import ViewCartItem from './app/pages/ViewCartItem';
+import { ViewCartItems } from './app/pages/ViewCart';
 
 const StackNav = createStackNavigator();
 
@@ -33,6 +34,9 @@ function App(): React.JSX.Element {
             }} />
             <StackNav.Screen name="ViewCartItem" component={ViewCartItem} options={{
               headerTitle: "Cart Items"
+            }} />
+            <StackNav.Screen name="CartItems" component={ViewCartItems} options={{
+              headerTitle: 'Carts'
             }} />
           </StackNav.Navigator>
         </>

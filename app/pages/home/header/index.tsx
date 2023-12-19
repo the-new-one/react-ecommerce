@@ -9,7 +9,7 @@ export const ProductHeader = (props: any) => {
     const navigation = useNavigation();
 
     const onOpenCartItem = () => {
-        navigation.navigate('ViewCartItem')
+        navigation.navigate('CartItems')
     }
 
     return <View style={style.productHeader}>

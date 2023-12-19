@@ -9,22 +9,27 @@ import { ViewContainerComponent } from '../../components/View';
 export const ViewCartItem = (props: any) => {
     const {params} = props.route;
     const {id, name, price, quantity} = params;
-
-    return <S.ContainerStyle key={id}>
-       <CardProductComponent>
-        <Image
-            source={require('../../public/box.png')}
-            style={style.cardIMG}
-        />
-        <ViewContainerComponent backgroundColor={CONSTANT_COLORS[4].value}>
-            <CS.ContainerStyle>
-                <Text style={style.textContainer}>Name: {name}</Text>
-                <Text style={style.textContainer}>Price: {price}</Text>
-                <Text style={style.textContainer}>Quantity: {quantity}</Text>
-            </CS.ContainerStyle>
-        </ViewContainerComponent>
-       </CardProductComponent>
-    </S.ContainerStyle>
+    return <>
+        {
+            id ?
+            <S.ContainerStyle key={id}>
+                <CardProductComponent>
+                    <Image
+                        source={require('../../public/box.png')}
+                        style={style.cardIMG}
+                    />
+                    <ViewContainerComponent backgroundColor={CONSTANT_COLORS[4].value}>
+                        <CS.ContainerStyle>
+                            <Text style={style.textContainer}>Name: {name}</Text>
+                            <Text style={style.textContainer}>Price: {price}</Text>
+                            <Text style={style.textContainer}>Quantity: {quantity}</Text>
+                        </CS.ContainerStyle>
+                    </ViewContainerComponent>
+                </CardProductComponent>
+            </S.ContainerStyle>:
+        <Text>Empty Cart.</Text>
+        }
+    </>
 }
 
 export default ViewCartItem;
