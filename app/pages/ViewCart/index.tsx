@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, ListRenderItemInfo, StyleSheet, Text, TextInput, ToastAndroid } from 'react-native';
+import { Button, Dimensions, FlatList, Image, ListRenderItemInfo, Pressable, StyleSheet, Text, TextInput, ToastAndroid, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import { CardProductComponent } from '../../components/Card';
 import * as CS from '../../components/Container/style';
 import { Product } from '../../models/products/product.dto';
@@ -10,11 +10,14 @@ import * as DV from '../../components/Divider/style';
 import * as FS from '../../components/FlexRow/style';
 import * as FC from '../../components/FlexCol/style';
 import * as IS from '../../components/TextInput/style';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useEffect, useMemo, useState } from 'react';
+import Modal from "react-native-modal";
 
 export const ViewCartItems = () => {
     const userCartContext = useAppCartContext();
+    const [togglePurchaseModal, setTogglePurchaseModal] = useState<boolean>(false);
+    let purchasedTotal: number = 0.00;
+
     const [actions, setActions] = useState<{key: string, id: number, value: number} | undefined>(undefined);
 
     useMemo(() => {}, [actions]);
@@ -111,6 +114,14 @@ export const ViewCartItems = () => {
         </>
     }
     
+    const onPurchaseItem = () => {
+        setTogglePurchaseModal(!togglePurchaseModal);
+    }
+    
+    const onCloseModal = () => {
+        setTogglePurchaseModal(false);
+    }
+
     return <CS.ContainerStyle style={style.parentHeight}>  
         {
             userCartContext.cartItem.length ? 
@@ -119,13 +130,48 @@ export const ViewCartItems = () => {
                     data={userCartContext.cartItem}
                     renderItem={onRenderCartItems}
                 />
-                <TouchableOpacity>
-                    <CS.ContainerStyle style={style.purchaseItemContainer}>
-                        <Text style={[style.cartText, {color: '#FFF'}]}>
-                            purchased item
-                        </Text>
-                    </CS.ContainerStyle>
-                </TouchableOpacity>
+                {
+                    togglePurchaseModal ?
+                    <Modal isVisible>
+                        <CS.ContainerStyle>
+                            <View style={style.viewModalContainer}>
+                                <View>
+                                    {
+                                        userCartContext.cartItem.map((cart: Product) => {
+                                            purchasedTotal += (cart.baseQuantity * parseFloat(cart.price));
+                                            return <View key={cart.id}>
+                                                <FS.FlexRowStyle>
+                                                    <Text style={style.cartText}>{cart.name}</Text>
+                                                    <Text style={style.cartText}>{cart.baseQuantity} x</Text>
+                                                    <Text style={style.cartText}>@{cart.price}</Text>
+                                                    <Text style={style.cartText}> = {cart.baseQuantity * parseFloat(cart.price)}</Text>
+                                                </FS.FlexRowStyle>
+                                                <View style={{borderBottomColor: 'red'}} />
+                                            </View>
+                                        })
+                                    }
+                                    <Text style={[style.cartText, style.purchaseTotalPayment]}>Total: $ { purchasedTotal }</Text>
+                                </View>
+                            <View style={style.buttonPurchaseActions}>
+                                <TouchableOpacity onPress={onCloseModal} style={style.purchaseCloseModal}>
+                                    <Text style={[style.cartText, style.cartTextCenter, style.cartTextWhite]}>close modal</Text>
+                                </TouchableOpacity>
+                                {/* <Button title="buy"/>
+                                <Button title="close" onPress={onCloseModal} /> */}
+                            </View>
+                            </View>
+                            
+                        </CS.ContainerStyle>
+                    </Modal>
+                    :
+                    <TouchableOpacity onPress={onPurchaseItem}>
+                        <CS.ContainerStyle style={style.purchaseItemContainer}>
+                            <Text style={[style.cartText, {color: '#FFF'}]}>
+                                purchased item
+                            </Text>
+                        </CS.ContainerStyle>
+                    </TouchableOpacity>
+                }
             </>
             :
             <Text style={style.cartTextEmpty}>Your Cart is empty.</Text>
@@ -140,6 +186,12 @@ const style = StyleSheet.create({
     cartText: {
         color: CONSTANT_COLORS[1].value,
         textTransform: 'capitalize',
+    },
+    cartTextCenter: {
+        textAlign: 'center',
+    },
+    cartTextWhite: {
+        color: CONSTANT_COLORS[2].value,
     },
     cartTextEmpty: {
         color: CONSTANT_COLORS[1].value,
@@ -165,5 +217,25 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: -10,
+    },
+    viewModalContainer: {
+        backgroundColor: CONSTANT_COLORS[2].value,
+        height: 300,
+        padding: 10,
+        zIndex: 100,
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    purchaseCloseModal: {
+        padding: 10,
+        backgroundColor: 'red',
+        borderRadius: 100,
+    },
+    purchaseTotalPayment: {
+        textAlign: 'right',
+        marginRight: 20
+    },
+    buttonPurchaseActions: {
+        display: 'flex',
     }
 });
