@@ -2,9 +2,9 @@ import { Image, StyleSheet, Text } from 'react-native';
 import * as S from '../../components/Container/style';
 import * as CS from '../../components/Container/style';
 
-import { CONSTANT_COLORS } from '../../constants/color';
 import { CardProductComponent } from '../../components/Card';
 import { ViewContainerComponent } from '../../components/View';
+import { COLORS } from '../../constants/color';
 
 export const ViewCartItem = (props: any) => {
     const {params} = props.route;
@@ -18,7 +18,7 @@ export const ViewCartItem = (props: any) => {
                         source={require('../../public/box.png')}
                         style={style.cardIMG}
                     />
-                    <ViewContainerComponent backgroundColor={CONSTANT_COLORS[4].value}>
+                    <ViewContainerComponent backgroundColor={COLORS.GREEN_1}>
                         <CS.ContainerStyle>
                             <Text style={style.textContainer}>Name: {name}</Text>
                             <Text style={style.textContainer}>Price: {price}</Text>
@@ -36,7 +36,7 @@ export default ViewCartItem;
 
 const style = StyleSheet.create({
     textContainer: {
-        color: CONSTANT_COLORS[1].value,
+        color: COLORS.BLACK,
         textTransform: 'capitalize',
     },
     cardIMG: {

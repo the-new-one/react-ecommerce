@@ -18,7 +18,6 @@ import {CardProductComponent} from '../../components/Card';
 import * as CS from '../../components/Container/style';
 import {Product} from '../../models/products/product.dto';
 import {useAppCartContext} from '../../providers/AppProvider/AppProvider';
-import {CONSTANT_COLORS} from '../../constants/color';
 import {BASE_URI} from '../../../utils/axiosConfig';
 import {DividerContainer} from '../../components/Divider/style';
 import * as DV from '../../components/Divider/style';
@@ -26,6 +25,7 @@ import * as FS from '../../components/FlexRow/style';
 import * as FC from '../../components/FlexCol/style';
 import {useMemo, useState} from 'react';
 import Modal from 'react-native-modal';
+import { COLORS } from '../../constants/color';
 
 export const ViewCartItems = (props: any) => {
   const userCartContext = useAppCartContext();
@@ -257,17 +257,17 @@ const style = StyleSheet.create({
     height: Dimensions.get('window').height - 60,
   },
   cartText: {
-    color: CONSTANT_COLORS[1].value,
+    color: COLORS.BLACK,
     textTransform: 'capitalize',
   },
   cartTextCenter: {
     textAlign: 'center',
   },
   cartTextWhite: {
-    color: CONSTANT_COLORS[2].value,
+    color: COLORS.WHITE,
   },
   cartTextEmpty: {
-    color: CONSTANT_COLORS[1].value,
+    color: COLORS.BLACK,
     fontSize: 20,
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -292,7 +292,7 @@ const style = StyleSheet.create({
     marginBottom: -10,
   },
   viewModalContainer: {
-    backgroundColor: CONSTANT_COLORS[2].value,
+    backgroundColor: COLORS.WHITE,
     height: 300,
     padding: 10,
     zIndex: 100,

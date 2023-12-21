@@ -1,24 +1,10 @@
 import { Color } from "../models/colors/color.dto";
 
-export const CONSTANT_COLORS: Color[] = [
-    {
-        key: 'gray',
-        value: '#DDD'
-    },
-    {
-        key: 'BLACK',
-        value: '#000'
-    },
-    {
-        key: 'white',
-        value: '#FFF'
-    },
-    {
-        key: 'red',
-        value: 'red'
-    },
-    {
-        key: 'green-1',
-        value: '#27a369'
-    }
-]
+export enum COLORS {
+    GRAY = '#DDD',
+    BLACK = '#000',
+    WHITE = '#FFF',
+    RED = 'red',
+    GREEN_1 = '#27a369',
+    WHITE_SMOKE = '#F5F5F5'
+}
