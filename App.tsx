@@ -14,46 +14,47 @@ import {AppCartProvider} from './app/providers/AppProvider/AppProvider';
 import ViewCartItem from './app/pages/ViewCartItem';
 import {ViewCartItems} from './app/pages/ViewCart';
 import {ProceedToBilling} from './app/pages/Billing';
+import { ModalProvider } from './app/providers/ModalProvider/ModalProvider';
 
 const StackNav = createStackNavigator();
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <AppCartProvider>
-        <>
-          <StackNav.Navigator initialRouteName="Home">
-            <StackNav.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerTitle: () => <ProductHeader />,
-              }}
-            />
-            <StackNav.Screen
-              name="ViewCartItem"
-              component={ViewCartItem}
-              options={{
-                headerTitle: 'Cart Items',
-              }}
-            />
-            <StackNav.Screen
-              name="CartItems"
-              component={ViewCartItems}
-              options={{
-                headerTitle: 'Carts',
-              }}
-            />
-            <StackNav.Screen
-              name="BillingScreen"
-              component={ProceedToBilling}
-              options={{
-                headerTitle: 'Billing',
-              }}
-            />
-          </StackNav.Navigator>
-        </>
-      </AppCartProvider>
+        <AppCartProvider>
+          <ModalProvider>
+            <StackNav.Navigator initialRouteName="Home">
+              <StackNav.Screen
+                name="Home"
+                component={Home}
+                options={{
+                  headerTitle: () => <ProductHeader />,
+                }}
+              />
+              <StackNav.Screen
+                name="ViewCartItem"
+                component={ViewCartItem}
+                options={{
+                  headerTitle: 'Cart Items',
+                }}
+              />
+              <StackNav.Screen
+                name="CartItems"
+                component={ViewCartItems}
+                options={{
+                  headerTitle: 'Carts',
+                }}
+              />
+              <StackNav.Screen
+                name="BillingScreen"
+                component={ProceedToBilling}
+                options={{
+                  headerTitle: 'Billing',
+                }}
+              />
+            </StackNav.Navigator>
+          </ModalProvider>
+        </AppCartProvider>
     </NavigationContainer>
   );
 }

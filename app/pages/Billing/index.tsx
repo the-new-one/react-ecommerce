@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet, Text, ToastAndroid} from 'react-native';
 import * as CS from '../../components/Container/style';
 import * as C from '../../components/Card';
 import * as TIS from '../../components/TextInput/style';
@@ -24,8 +24,14 @@ export const ProceedToBilling = () => {
         firstname, middlename, lastname, contactno, address, email, password
       }
   
-      const response = await signUp.signUp(payLoads)
-      console.log(response);
+      signUp.signUp(payLoads)
+        .then((response) => {
+          const {data} = response;
+          console.log(data);
+        })
+        .catch((err) => {
+          ToastAndroid.show('err', ToastAndroid.LONG);
+        });
     }
     catch(error) {
       console.log(error)
