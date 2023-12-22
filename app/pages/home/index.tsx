@@ -17,6 +17,7 @@ import * as DivCon from '../../components/Divider/style';
 
 import {CardProductComponent} from '../../components/Card';
 import {useAppCartContext} from '../../providers/AppProvider/AppProvider';
+import { COLORS } from '../../constants/color';
 
 type HomeProps = {
   navigation: any;
@@ -110,5 +111,6 @@ const style = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '500',
+    color: COLORS.BLACK,
   },
 });

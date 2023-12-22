@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';;
-import {CONSTANT_COLORS} from '../../../constants/color';;
+import {COLORS} from '../../../constants/color';;
 import {TouchableOpacity} from 'react-native-gesture-handler';;
 import {useAppCartContext} from '../../../providers/AppProvider/AppProvider';;
 import {useNavigation} from '@react-navigation/native';;
@@ -46,14 +46,14 @@ const style = StyleSheet.create({
   },
   productText: {
     fontSize: 22,
-    color: CONSTANT_COLORS[1].value,
+    color: COLORS.BLACK,
     fontWeight: 'bold',
   },
   productCartView: {
     position: 'relative',
   },
   productTextCartCounter: {
-    color: CONSTANT_COLORS[3].value,
+    color: COLORS.RED,
     fontSize: 15,
     fontWeight: '500',
     position: 'absolute',
